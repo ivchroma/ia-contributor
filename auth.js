@@ -13,7 +13,7 @@ function parseJwt(token) {
 function handleCredentialResponse(response) {
     const userObject = parseJwt(response.credential);
     document.getElementById("buttonDiv").style.display = "none";
-    document.getElementById("status").innerText = `Hello, ${userObject.name}!`;
+    document.getElementById("status").innerText = `${userObject.name}`;
 }
 
 // Initialize Google Sign-In
