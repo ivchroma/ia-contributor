@@ -29,3 +29,18 @@ google.accounts.id.renderButton(
     { theme: "outline", size: "large" }
 );
 google.accounts.id.prompt();
+
+// Create a single supabase client for interacting with your database
+
+const client = supabase.createClient('https://zzypezedfkegupwpwsam.supabase.co', 'sb_publishable_pasDUaq9bzG0kQkFIvyaeQ_XdvKTBO_')
+async function qryID(){
+    const { data, error } = await client
+    .from('people')
+    .select('id')
+    if (error) {
+    console.error('Error:', error)
+    } else {
+    console.log('Data:', data)
+    }
+}
+qryID()
