@@ -22,7 +22,9 @@ else {
     document.getElementById("buttonDiv").style.display = "none";
     document.getElementById("mainUI").style.display = "block";
     let username = session.user.user_metadata.full_name
-    document.getElementById("status").innerText = `${username}`;
+    /*document.getElementById("status").innerText = `${username}`;*/
+    document.getElementById("status").innerText = `${username}, you are not an authorized user. The functionality on this website will not be available for you.`;
+
 }
 
 
@@ -34,11 +36,24 @@ async function qryID() {
     .eq('email', session.user.user_metadata.email);
 
   if (error) {
-    console.error('Error:', error);
+    console.error('Error in qryID:', error);
     return null;
   }
 
   return data[0].person_id;
+}
+async function qryRole() {
+  const { data, error } = await client
+    .from('people')
+    .select('role')
+    .eq('email', session.user.user_metadata.email);
+
+  if (error) {
+    console.error('Error in qryRole:', error);
+    return null;
+  }
+
+  return data[0].role;
 }
 
 function insAddEvent(personID, timeBegin, timeEnd, stateVar){
@@ -148,10 +163,22 @@ document.getElementById("removeButton").addEventListener("click", funcRemoveForm
 document.getElementById("tableBody").addEventListener("click", funcRemoveShortcut)
 
 let uID;
+let uRole;
 let schedule;
 (async () => {
+  let username = session.user.user_metadata.full_name
   uID = await qryID();
+  
+  uRole = await qryRole();
+  if(uRole == "editor"){
+    document.getElementById("status").innerText = `Welcome editor ${username}!`
+  }
+  if(uRole == "contributor"){
+    document.getElementById("status").innerText = `Welcome contributor ${username}!`
+  }
+  
   console.log('uID:', uID);
+  console.log('uRole:', uRole);
   schedule = await qryAvailabilityByID(uID);
   console.log('schedule:', schedule);
   displayTable(schedule);
