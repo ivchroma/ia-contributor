@@ -1,2 +1,2 @@
 # ia-contributor
-IA - contributor website. WOOOOOO BABY THIS IS WHAT I'VE BEEN WAITING FORRRR
+Adrian Nabatov's IB Computer Science HL IA - contributor website.
