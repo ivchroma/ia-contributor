@@ -1,11 +1,10 @@
 
 
-document.getElementById("mainUI").style.display = "block";
+document.getElementById("mainUI").style.display = "none";
 
 
 
 const client = supabase.createClient('https://zzypezedfkegupwpwsam.supabase.co', 'sb_publishable_pasDUaq9bzG0kQkFIvyaeQ_XdvKTBO_')
-
 
 const {data:{session}} = await client.auth.getSession()
 
@@ -20,7 +19,6 @@ const { data, error } = await client.auth.signInWithOAuth({
 else {
     console.log("User logged in:", session.user)
     document.getElementById("buttonDiv").style.display = "none";
-    document.getElementById("mainUI").style.display = "block";
     let username = session.user.user_metadata.full_name
     /*document.getElementById("status").innerText = `${username}`;*/
     document.getElementById("status").innerText = `${username}, you are not an authorized user. The functionality on this website will not be available for you.`;
@@ -172,9 +170,11 @@ let schedule;
   uRole = await qryRole();
   if(uRole == "editor"){
     document.getElementById("status").innerText = `Welcome editor ${username}!`
+    document.getElementById("mainUI").style.display = "block";
   }
   if(uRole == "contributor"){
     document.getElementById("status").innerText = `Welcome contributor ${username}!`
+    document.getElementById("mainUI").style.display = "block";
   }
   
   console.log('uID:', uID);
